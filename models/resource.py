@@ -27,7 +27,7 @@ if 'ON_HEROKU' not in environ:
 else:
 	dynamodb = resource(
 		'dynamodb',
-		config=boto3.session.Config(signature_version='s3v4'),
+		config=session.Config(signature_version='s3v4'),
 		region_name=AWS_REGION_NAME,
 		aws_access_key_id=AWS_ACCESS_KEY_ID,
 		aws_secret_access_key=AWS_SECRET_ACCESS_KEY
