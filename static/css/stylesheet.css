@@ -1,0 +1,66 @@
+/* Use a Google Font within body */
+body {
+	font-family: "Rubik", Helvetica, sans-serif;
+}
+
+/* Text inputs should be centered */
+input {
+	text-align: center;
+}
+
+/* Make the button width 50% of div */
+#results-btn {
+	width: 50%;
+}
+
+/* Personal bar should all have same input heights */
+.personal-bar {
+	height: 2em;
+}
+
+/* Style the sliders with the same color as Dash app */
+#slider-section-0 .rc-slider .rc-slider-track {
+	background-color: #5B8E7D;
+}
+#slider-section-1 .rc-slider .rc-slider-track {
+	background-color: #8CB369;
+}
+#slider-section-2 .rc-slider .rc-slider-track {
+	background-color: #F4E285;
+}
+#slider-section-3 .rc-slider .rc-slider-track {
+	background-color: #F4A259;
+}
+#slider-section-4 .rc-slider .rc-slider-track {
+	background-color: #BC4B51;
+}
+#slider-section-0 .rc-slider .rc-slider-handle {
+	border: solid 2px #5B8E7D;
+}
+#slider-section-1 .rc-slider .rc-slider-handle {
+	border: solid 2px #8CB369;
+}
+#slider-section-2 .rc-slider .rc-slider-handle {
+	border: solid 2px #F4E285;
+}
+#slider-section-3 .rc-slider .rc-slider-handle {
+	border: solid 2px #F4A259;
+}
+#slider-section-4 .rc-slider .rc-slider-handle {
+	border: solid 2px #BC4B51;
+}
+#slider-section-0 .rc-slider .rc-slider-step .rc-slider-dot-active {
+	border: solid 2px #5B8E7D;
+}
+#slider-section-1 .rc-slider .rc-slider-step .rc-slider-dot-active {
+	border: solid 2px #8CB369;
+}
+#slider-section-2 .rc-slider .rc-slider-step .rc-slider-dot-active {
+	border: solid 2px #F4E285;
+}
+#slider-section-3 .rc-slider .rc-slider-step .rc-slider-dot-active {
+	border: solid 2px #F4A259;
+}
+#slider-section-4 .rc-slider .rc-slider-step .rc-slider-dot-active {
+	border: solid 2px #BC4B51;
+}
