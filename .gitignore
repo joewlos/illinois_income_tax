@@ -115,3 +115,4 @@ dmypy.json
 
 # Configuration
 /configuration
+config.py

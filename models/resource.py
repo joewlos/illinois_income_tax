@@ -8,8 +8,8 @@ import decimal
 import json
 from os import environ
 
-# Check if we are on AWS, and use config if not
-if 'ON_AWS' not in environ:
+# Check if we are on Heroku, and use config if not
+if 'ON_HEROKU' not in environ:
 	import sys
 	sys.path.append('..')
 	from config import Config
