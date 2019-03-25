@@ -550,7 +550,7 @@ def results_callback(*values):
 			'session_id': session_id,
 			'timestamp': datetime.now().isoformat(),
 			'type': 'submit',
-			'request_ip': request.environ.get('HTTP_X_REAL_IP', request.remote_addr),
+			'request_ip': request.headers['X-Forwarded-For'],
 			'tax_rates': slider_pos,
 			'income': income
 		}
@@ -659,7 +659,7 @@ def graph_callback(*values):
 	kvs_data = {
 		'session_id': session_id,
 		'timestamp': datetime.now().isoformat(),
-		'request_ip': request.environ.get('HTTP_X_REAL_IP', request.remote_addr),
+		'request_ip': request.headers['X-Forwarded-For'],
 		'tax_rates': slider_pos,
 		'income': income
 	}
