@@ -28,9 +28,9 @@ else:
 	dynamodb = resource(
 		'dynamodb',
 		config=session.Config(signature_version='s3v4'),
-		region_name=AWS_REGION_NAME,
-		aws_access_key_id=AWS_ACCESS_KEY_ID,
-		aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+		region_name=environ['AWS_REGION_NAME'],
+		aws_access_key_id=environ['AWS_ACCESS_KEY_ID'],
+		aws_secret_access_key=environ['AWS_SECRET_ACCESS_KEY']
 	)
 
 # Amazon's helper class for converting DynamoDB items to JSON
