@@ -22,13 +22,6 @@ red = '#BC4B51'
 font = '"Rubik", Helvetica, sans-serif;'  # Imported in external_stylesheets
 
 # Credits for creators and vendors
-next_steps = '''
-	*Illinois' governor and legislature are considering
-	a [constitutional amendment](https://chicago.suntimes.com/opinion/j-b-pritzker-progressive-income-tax-fair-illinois-budget/)
-	to change the state's flat income tax to a progressive system.
-	If the amendment is passed, Illinois' citizens would vote to
-	approve or disapprove the change to the state constitution in a referendum in 2020.*
-	'''
 credits = '''
 	*The data above are estimates, using individual income tax stratifications
 	from the [Illinois Department of Revenue](https://www2.illinois.gov/rev/research/taxstats/IndIncomeStratifications/Pages/default.aspx)

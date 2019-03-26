@@ -19,11 +19,7 @@ import sys
 import uuid
 
 # Import styles that apply to all Dash apps
-from styling import (
-	external_stylesheets,
-	colors, green, red, font,
-	credits, next_steps
-)
+from styling import *
 
 # Import from app file in parent directory
 sys.path.append('..')
@@ -63,33 +59,33 @@ tax_dict = [
 		'value': 'IN_2018',
 		'rates': [0.0323] * 5
 	},
-	{	'label': 'Louisiana Progressive Tax',
-		'value': 'LA_2018',
-		'rates': [0.02, 0.04, 0.06, 0.06, 0.06]
+	{ 	'label': 'Iowa Progressive Tax',
+		'value': 'IA_2018',
+		'rates': [0.0243, 0.0648, 0.0792, 0.0898, 0.0898]
 	},
-	{	'label': 'Maine Progressive Tax',
-		'value': 'ME_2018',
-		'rates': [0.058, 0.0675, 0.0715, 0.0715, 0.0715]
-	},
-	{	'label': 'Massachusetts Flat Tax', 
-		'value': 'MA_2018',
-		'rates': [0.051] * 5
+	{	'label': 'Kansas Progressive Tax',
+		'value': 'KS_2018',
+		'rates': [0.027] + ([0.046] * 4)
 	},
 	{	'label': 'Michigan Flat Tax', 
 		'value': 'MI_2018',
 		'rates': [0.0425] * 5
 	},
-	{	'label': 'New Jersey Progressive Tax',
-		'value': 'NJ_2018',
-		'rates': [0.014, 0.0175, 0.0553, 0.0637, 0.0897]
+	{	'label': 'Minnesota Progressive Tax',
+		'value': 'MN_2018',
+		'rates': [0.0535, 0.0705, 0.0785, 0.0985, 0.0985]
 	},
-	{	'label': 'Utah Flat Tax', 
-		'value': 'UT_2018',
-		'rates': [0.05] * 5
+	{	'label': 'Missouri Flat Tax',
+		'value': 'MO_2018',
+		'rates': [0.06] * 5
 	},
-	{	'label': 'Vermont Progressive Tax',
-		'value': 'VT_2018',
-		'rates': [0.035, 0.066, 0.066, 0.076, 0.0875]
+	{	'label': 'Nebraska Progressive Tax',
+		'value': 'NE_2018',
+		'rates': [0.0246] + ([0.0684] * 4)
+	},
+	{	'label': 'Ohio Progressive Tax',
+		'value': 'OH_2018',
+		'rates': [0.02476, 0.02969, 0.0396, 0.04597, 0.04997]
 	},
 	{	'label': 'Wisconsin Progressive Tax',
 		'value': 'WI_2018',
@@ -116,7 +112,7 @@ def create_sliders(values=[0.0495] * 5, default='IL_2017'):
 	# First slider is a dropdown for viewing different tax rates
 	sliders = [
 		html.H5("Customize Illinois' Rates"),
-		html.H6("Apply Another State's Tax System to Illinois",
+		html.H6("Apply a Similar State's Tax System to Illinois",
 			style={'margin-top': '30px'}),
 		create_dropdown(default=default)
 	]
@@ -211,13 +207,15 @@ def example_bar_graphs(
 			amt = min(b[1], agi) - b[0]
 			tax = amt * taxes[i]
 
-			# Hoverinfo depends on whether x is supplied
+			# If x is supplied, use the tag as the hoverinfo
 			if x:
 				name = re.sub(',00[0|1]', 'k', x[i])
 				hoverinfo = 'name'
+			
+			# Otherwise, use the amount of tax paid
 			else:
-				name = None
-				hoverinfo = 'none'
+				name = '${:,.0f}'.format(tax)
+				hoverinfo = 'name'
 
 			# Add the trace for the bar chart
 			trace = go.Bar(
@@ -304,11 +302,14 @@ def create_info():
 	'''))
 	header2 = dcc.Markdown(dedent('*SEE THE EFFECTS OF DIFFERENT RATES*'))
 	text3 = dcc.Markdown(dedent('''
+	Illinois' governor and legislature are considering
+	a [constitutional amendment](https://chicago.suntimes.com/opinion/j-b-pritzker-progressive-income-tax-fair-illinois-budget/)
+	to change the state's flat income tax to a progressive system.
 	Use the sliders to **customize Illinois' tax rates** for different income brackets,
-	or use the dropdown menu to apply rates used in other states to Illinois.
+	or use the dropdown menu to apply rates used in other Midwest states to Illinois.
 	Enter your income to view how different rates would change your own tax bill. 
 	When you are happy with your customizations,
-	click "View Results" to see how your choices line up with those of other users.
+	submit your rates to see how your choices line up with those of other users.
 	'''))
 
 	# Use greyscale for the example colors
@@ -431,7 +432,7 @@ def serve_layout():
 
 			# Show a horizontal stacked bar illustrating how the tax is calculated
 			html.Div(children=[
-				dcc.Graph(id='graph-agi-calc')
+				dcc.Graph(id='graph-agi-calc', config={'displayModeBar': False})
 			], className='col-md-4')
 
 		# Close out the AGI example row
@@ -444,13 +445,19 @@ def serve_layout():
 				# Revenue pie chart and total collected
 				html.Div(children=[
 					html.Div(children=[
-						dcc.Graph(id='tax-revenue-bar')
-					], className="col-md-6"),
+						dcc.Graph(id='tax-revenue-bar', config={'displayModeBar': False}),
+						html.H5("Revenue from Customized Rates",
+							style={'padding-top': '1%'}),
+						html.Div(id='total-collected')
+					], className="col-md-6 text-center"),
 
 					# Tax revenue graph is updated by the sliders
 					html.Div(children=[
-						dcc.Graph(id='tax-revenue-pie')
-					], className='col-md-6')
+						dcc.Graph(id='tax-revenue-pie', config={'displayModeBar': False}),
+						html.H5("Change to Illinois' Budget",
+							style={'padding-top': '1%'}),
+						html.Div(id='collected-difference')
+					], className='col-md-6 text-center')
 
 				# Close out the AGI graph row
 				], className='row')
@@ -460,42 +467,26 @@ def serve_layout():
 
 			# Sliders in div
 			html.Div(children=[
-				html.Div(
-					children=create_sliders(),
-					id='all-sliders'
-				)
+				html.Div(children=create_sliders(), id='all-sliders')
 			], className='col-md-4')
 		], className='row', style={'padding-top': '1.25%'}),
 
-		# Show the user how much total revenue is collected
+		# Button for viewing results
 		html.Div(children=[
 			html.Div(children=[
-				html.H5("Total Revenue with Customized Rates"),
-				html.Div(id='total-collected')
-			], className='col-md-4 text-center'),
-
-			# Show the difference between the new amount and the old
-			html.Div(children=[
-				html.H5("Change to Illinois' Budget"),
-				html.Div(id='collected-difference')
-			], className='col-md-4 text-center'),
-
-			# Button for viewing results
-			html.Div(children=[
 				html.A(
-					html.Button('View Results', id='results-btn', 
+					html.Button("Submit to View Other Users' Results", id='results-btn', 
 						className='btn btn-outline-dark'),
 				href='/results/{}'.format(session_id))  # Redirect to route showing results
-			], className='col-md-4 text-center')
-		], className='row align-items-center',
-			style={'padding-top': '7.5%', 'padding-bottom': '2.5%'}),
+			], className='col-md-12 text-center')
+		], className='row align-items-center', style={'padding-top': '7.5%', 'padding-bottom': '2.5%'}),
 
 		# In markdown italics, tell the user where this information came from
 		html.Div(children=[
 			html.Div(children=[
 				dcc.Markdown(dedent(credits))
 			], className='col-md-12 text-center')
-		], className='row', style={'padding-top': '3.5%'}),
+		], className='row', style={'padding-top': '2.5%'}),
 
 		# Hidden div for session id
 		html.Div(session_id, id='session-id', style={'display': 'none'}),
@@ -666,16 +657,12 @@ def graph_callback(*values):
 		data=rev_data,
 		layout=go.Layout(
 			barmode='stack',
-			title='Total IL Tax Revenue<br>by Income Bracket',
+			title='Total IL Tax Revenue<br>Distributed by Income Bracket',
 			titlefont={'family': font},
 			yaxis={
 				'title':'Total Income Tax Revenue',
 				'titlefont': {'family': font},
 				'tickprefix': '$'
-			},
-			xaxis={
-				'title':'Taxpayer Income Bracket',
-				'titlefont': {'family': font}
 			},
 			showlegend=False
 		)

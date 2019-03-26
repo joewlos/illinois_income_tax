@@ -16,11 +16,7 @@ import re
 import sys
 
 # Import styles that apply to all Dash apps
-from styling import (
-	external_stylesheets,
-	colors, green, red, font,
-	credits, next_steps
-)
+from styling import *
 
 # Import from app file in parent directory
 sys.path.append('..')
