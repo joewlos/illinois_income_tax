@@ -304,10 +304,12 @@ def create_info():
 	text3 = dcc.Markdown(dedent('''
 	Illinois' governor and legislature are considering
 	a [constitutional amendment](https://chicago.suntimes.com/opinion/j-b-pritzker-progressive-income-tax-fair-illinois-budget/)
-	to change the state's flat income tax to a progressive system.
+	to change the state's flat income tax to a progressive system,
+	in order to solve Illinois' growing budget defecit.
 	Use the sliders to **customize Illinois' tax rates** for different income brackets,
 	or use the dropdown menu to apply rates used in other Midwest states to Illinois.
-	Enter your income to view how different rates would change your own tax bill. 
+	Enter your income to view how different rates would change your own tax bill,
+	and view the effect on Illinois' budget defecit. 
 	When you are happy with your customizations,
 	submit your rates to see how your choices line up with those of other users.
 	'''))
@@ -454,7 +456,7 @@ def serve_layout():
 					# Tax revenue graph is updated by the sliders
 					html.Div(children=[
 						dcc.Graph(id='tax-revenue-pie', config={'displayModeBar': False}),
-						html.H5("Change to Illinois' Budget",
+						html.H5("Effect on Illinois' Budget",
 							style={'padding-top': '1%'}),
 						html.Div(id='collected-difference')
 					], className='col-md-6 text-center')
@@ -492,7 +494,7 @@ def serve_layout():
 		html.Div(session_id, id='session-id', style={'display': 'none'}),
 
 	# Close out the container with 100% of the frame width
-	], style={'width': '100%', 'padding-left': '2.5%', 'padding-right': '2.5%'})
+	], style={'width': '100%', 'padding-left': '3.75%', 'padding-right': '3.75%'})
 
 # Serve the layout with different title
 dash_app_input.layout = serve_layout
@@ -657,7 +659,7 @@ def graph_callback(*values):
 		data=rev_data,
 		layout=go.Layout(
 			barmode='stack',
-			title='Total IL Tax Revenue<br>Distributed by Income Bracket',
+			title='IL Tax Revenue<br>Distributed by Income Bracket',
 			titlefont={'family': font},
 			yaxis={
 				'title':'Total Income Tax Revenue',
