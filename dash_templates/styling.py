@@ -28,6 +28,7 @@ credits = '''
 	for 2016.
 	[Eric Green](http://www.github.com/adriangreen) and [Joe Wlos](http://www.joewlos.com)
 	produced the visualizations using the Python framework [Dash](https://plot.ly/products/dash/) by Plotly.
+	The code is available on [GitHub](https://github.com/joewlos/illinois_income_tax).
 	[Amazon DynamoDB](https://aws.amazon.com/dynamodb/) is the NoSQL database service.
 	[MaxMind](https://www.maxmind.com) provides GeoLite2 data for generalizing IP locations.
 	No personally identifiable information is stored by this application.*
