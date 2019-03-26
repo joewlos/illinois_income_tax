@@ -327,10 +327,10 @@ def create_info():
 
 	# Use greyscale for the example colors
 	greys = [
-		'#222222',
-		'#444444',
+		'#777777',
 		'#666666',
-		'#777777'
+		'#444444',
+		'#222222'
 	]
 
 	# Arrange the instructions with the examples
