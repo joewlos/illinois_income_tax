@@ -53,6 +53,7 @@ TAX RATE BAR CHART
 '''
 # Function for returning bar graph of rates
 def tax_rate_bar(tax_rates, title):
+	rates = [round(tax_rates[v] * 100.0, 2) for v in x]
 	tax_data = [{
 		'x': [re.sub(',00[0|1]', 'k', k) for k in x],
 		'y': [round(tax_rates[v] * 100.0, 2) for v in x],
@@ -61,6 +62,12 @@ def tax_rate_bar(tax_rates, title):
 			'color': colors
 		}
 	}]
+
+	# Range is 17.5% unless one of the graphs exceeds it
+	if max(rates) > 17.5:
+		ymax = max(rates)
+	else:
+		ymax = 17.5
 
 	# Return the data for the figure
 	return go.Figure(
@@ -71,7 +78,8 @@ def tax_rate_bar(tax_rates, title):
 			yaxis={
 				'title':'Tax Rate for Bracket',
 				'titlefont': {'family': font},
-				'ticksuffix': '%'
+				'ticksuffix': '%',
+				'range': [0, ymax]
 			},
 			xaxis={
 				'title':'Income Bracket',
@@ -149,6 +157,17 @@ def serve_layout():
 			dcc.Graph(figure=avg_submitted(), id='average-tax-rates', className='col-md-4')
 		], className='row', style={'height': '300px'}),
 
+		# Direct the user back to the customizer for another session
+		html.Div(children=[
+			html.Div(children=[
+				html.A(
+					html.Button('Return to IL Income Tax Customizer', 
+						id='return-btn', 
+						className='btn btn-outline-dark'), 
+				href='/')  # Redirect to route showing input
+			], className='col-md-12 text-center')
+		], className='row', style={'padding-top': '4.25%'}),
+
 		# In markdown italics, tell the user where this information came from
 		html.Div(children=[
 			html.Div(children=[
@@ -165,7 +184,7 @@ dash_app_results.title = 'IL Income Tax Results'
 
 
 '''
-SERVE LAYOUT WITH DATA
+USER SPECIFIC BAR CHART
 '''
 # Get the data for the session from the url
 @dash_app_results.callback(

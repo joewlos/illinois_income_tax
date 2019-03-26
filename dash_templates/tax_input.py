@@ -543,6 +543,12 @@ def results_callback(*values):
 	session_id = values[-2]
 	values = values[1:-2]  # Middle of values returned
 
+	# If on Heroku, use forwarded IP
+	if 'ON_HEROKU' not in os.environ:
+		ip = request.remote_addr
+	else:
+		ip = request.headers['X-Forwarded-For']
+
 	# Send data about graph change to kvs, only if button actually clicked
 	if n:
 		slider_pos = {k:v for k,v in zip(x, values)}
@@ -550,7 +556,7 @@ def results_callback(*values):
 			'session_id': session_id,
 			'timestamp': datetime.now().isoformat(),
 			'type': 'submit',
-			'request_ip': request.headers['X-Forwarded-For'],
+			'request_ip': ip,
 			'tax_rates': slider_pos,
 			'income': income
 		}
@@ -654,12 +660,18 @@ def graph_callback(*values):
 			)
 		)
 
+	# If on Heroku, use forwarded IP
+	if 'ON_HEROKU' not in os.environ:
+		ip = request.remote_addr
+	else:
+		ip = request.headers['X-Forwarded-For']
+
 	# Send data about graph change to kvs
 	slider_pos = {k:v for k,v in zip(x, values)}
 	kvs_data = {
 		'session_id': session_id,
 		'timestamp': datetime.now().isoformat(),
-		'request_ip': request.headers['X-Forwarded-For'],
+		'request_ip': ip,
 		'tax_rates': slider_pos,
 		'income': income
 	}
