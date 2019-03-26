@@ -22,7 +22,7 @@ import uuid
 from styling import (
 	external_stylesheets,
 	colors, green, red, font,
-	credits
+	credits, next_steps
 )
 
 # Import from app file in parent directory
@@ -290,39 +290,25 @@ def create_info():
 	regardless of how high or low the individual's income is.
 	Most other states and the federal government use a **progressive** income tax system.
 	In progressive systems, the government divides an individual's income into brackets,
-	and tax rates rise in higher brackets.
+	with tax rates rising in higher brackets.
 	'''))
 	text2 = dcc.Markdown(dedent('''
-	For example, the lowest federal income bracket ends at $9,525.
+	For example, the bars below show how progressive federal income tax brackets
+	and Illinois' flat tax are applied to an annual income of $100,000.
 	The federal government taxes every dollar earned up to $9,525 at 10%,
-	while every dollar earned above $9,525 is taxed at 12%.
+	while every dollar earned between $9,525 and $38,700 is taxed at 12%.
 	In Illinois' flat system, there are no brackets.
-	The tax rate never changes, across every level of income.
 	Whether you're a billionaire or living below the poverty line,
 	your effective tax rate in Illinois–before exemptions and credits–is
-	always **4.95%** for every dollar you earn. 
-	'''))
-	text3 = dcc.Markdown(dedent('''
-	The bars above show how progressive federal income tax brackets
-	and Illinois' flat tax are applied to an annual income of $100,000.
-	The progressive tax rates rise in each income bracket, 
-	with the individual owing more taxes on the portions of income
-	in higher brackets. The Illinois tax rate remains flat.
-	'''))
-	text4 = dcc.Markdown(dedent('''
-	Illinois' governor and legislature are considering
-	a [constitutional amendment](https://chicago.suntimes.com/opinion/j-b-pritzker-progressive-income-tax-fair-illinois-budget/)
-	to change the state's flat income tax to a progressive system.
-	If the amendment is passed, Illinois' citizens would vote to
-	approve or disapprove the change to the state constitution in a referendum in 2020.
+	always **4.95%** for every dollar you earn.
 	'''))
 	header2 = dcc.Markdown(dedent('*SEE THE EFFECTS OF DIFFERENT RATES*'))
-	text5 = dcc.Markdown(dedent('''
-	Use the sliders on the right to **customize Illinois' tax rates** for different income brackets,
+	text3 = dcc.Markdown(dedent('''
+	Use the sliders to **customize Illinois' tax rates** for different income brackets,
 	or use the dropdown menu to apply rates used in other states to Illinois.
-	Enter your income below to view how different rates would change your own tax bill. 
+	Enter your income to view how different rates would change your own tax bill. 
 	When you are happy with your customizations,
-	click "View Results" to see how your tax rates line up with those of other users.
+	click "View Results" to see how your choices line up with those of other users.
 	'''))
 
 	# Use greyscale for the example colors
@@ -366,10 +352,8 @@ def create_info():
 				))
 			], className='col-md-6')
 		], className='row', style={'margin-top': '-.5%'}),  # Adjust for large graph size
-		html.P(text3),
-		html.P(text4),
 		html.H5(header2, style={'padding-top': '2.5%'}),
-		html.P(text5, style={'padding-bottom': '-.5%'})
+		html.P(text3, style={'padding-bottom': '-.5%'})
 	]
 
 	# Return the text
@@ -492,7 +476,7 @@ def serve_layout():
 
 			# Show the difference between the new amount and the old
 			html.Div(children=[
-				html.H5("Difference from 2019 Flat Tax Revenue"),
+				html.H5("Change to Illinois' Budget"),
 				html.Div(id='collected-difference')
 			], className='col-md-4 text-center'),
 
@@ -504,14 +488,14 @@ def serve_layout():
 				href='/results/{}'.format(session_id))  # Redirect to route showing results
 			], className='col-md-4 text-center')
 		], className='row align-items-center',
-			style={'padding-top': '7.5%', 'padding-bottom': '5%'}),
+			style={'padding-top': '7.5%', 'padding-bottom': '2.5%'}),
 
 		# In markdown italics, tell the user where this information came from
 		html.Div(children=[
 			html.Div(children=[
 				dcc.Markdown(dedent(credits))
 			], className='col-md-12 text-center')
-		], className='row'),
+		], className='row', style={'padding-top': '3.5%'}),
 
 		# Hidden div for session id
 		html.Div(session_id, id='session-id', style={'display': 'none'}),
@@ -682,7 +666,7 @@ def graph_callback(*values):
 		data=rev_data,
 		layout=go.Layout(
 			barmode='stack',
-			title='IL Tax Revenue<br>by Income Bracket',
+			title='Total IL Tax Revenue<br>by Income Bracket',
 			titlefont={'family': font},
 			yaxis={
 				'title':'Total Income Tax Revenue',

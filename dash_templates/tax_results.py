@@ -19,7 +19,7 @@ import sys
 from styling import (
 	external_stylesheets,
 	colors, green, red, font,
-	credits
+	credits, next_steps
 )
 
 # Import from app file in parent directory
@@ -58,6 +58,7 @@ def tax_rate_bar(tax_rates, title):
 		'x': [re.sub(',00[0|1]', 'k', k) for k in x],
 		'y': [round(tax_rates[v] * 100.0, 2) for v in x],
 		'type': 'bar',
+		'hoverinfo': 'y',
 		'marker': {
 			'color': colors
 		}
@@ -173,7 +174,7 @@ def serve_layout():
 			html.Div(children=[
 				dcc.Markdown(dedent(credits))
 			], className='col-md-12 text-center')
-		], className='row', style={'padding-top': '3.75%'})
+		], className='row', style={'padding-top': '3.5%'})
 
 	# Close out the container with 100% of the frame width
 	], style={'width': '100%', 'padding-left': '2.5%', 'padding-right': '2.5%'})
