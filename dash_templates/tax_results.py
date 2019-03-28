@@ -127,21 +127,39 @@ def serve_layout():
 		# Information for user
 		html.Div(children=[
 			html.Div(children=[
-				html.H5(dcc.Markdown(dedent('*THANK YOU FOR TESTING THIS SITE!*'))),
+				html.H5(dcc.Markdown(dedent('*THANK YOU FOR TESTING THIS APP!*'))),
 				html.P(dcc.Markdown(dedent(
 					'''
-					The site is currently collecting the following information from users:
-					* 1. Generalized Location
-					* 2. All Slider Movements
-					* 3. All Income Entries
-					* 4. Any State Dropdown Selections
-					* 5. Timestamp for Each Action
+					The goal of this app is twofold: provide a simple tool for Illinois' citizens
+					to assess changes to state income tax rates
+					and provide an interactive survey of public opinion on a complex issue. 
+					Response rates on public opinion polls have declined
+					as much as [36% since 1997](https://www.nationalaffairs.com/publications/detail/the-trouble-with-polling).
+					Traditional online surveys, which ask users to reply to multiple choice questions,
+					still get responses, but they fail to capture [complicated views on complex systems](https://www.brookings.edu/articles/polling-public-opinion-the-good-the-bad-and-the-ugly/),
+					like tax rates. By recording user interactions with this dashboard, 
+					this site both educates visitors about the effects of different policy choices,
+					and provides insight on what influences voters' thinking.
 					'''
 				))),
 				html.P(dcc.Markdown(dedent(
 					'''
-					If you have any ideas for how to interactively display that information,
-					let Joe know. He's still working on that part. 
+					The site is currently collecting the following information from users:
+					* Generalized Location for Each Session
+					* All Slider Movements
+					* All Income Entries
+					* All State Dropdown Selections
+					* Timestamp for Each Action
+					'''
+				))),
+				html.P(dcc.Markdown(dedent(
+					'''
+					This app is still a work in progress.
+					Better visualization of results, including time series data on user sessions,
+					is in development.
+					If you have any ideas for how to improve the app,
+					including changes to the data collection and visualization,
+					reach out to Eric and Joe.
 					'''
 				)))
 			], className='col-md-12 text-justify')
@@ -152,7 +170,7 @@ def serve_layout():
 			dcc.Graph(figure=IL_standard(), id='current-tax-rates', className='col-md-4'),
 			dcc.Graph(id='session-tax-rates', className='col-md-4'),
 			dcc.Graph(figure=avg_submitted(), id='average-tax-rates', className='col-md-4')
-		], className='row', style={'height': '300px'}),
+		], className='row', style={'height': '300px', 'padding-top': '2.5%'}),
 
 		# Direct the user back to the customizer for another session
 		html.Div(children=[
