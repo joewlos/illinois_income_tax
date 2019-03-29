@@ -16,6 +16,7 @@ input {
 /* Personal bar should all have same input heights */
 .personal-bar {
 	height: 2em;
+	margin-bottom: 2em;
 }
 
 /* Style the sliders with the same color as Dash app */

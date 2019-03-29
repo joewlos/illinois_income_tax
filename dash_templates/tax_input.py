@@ -403,33 +403,23 @@ def serve_layout():
 			# New rows to keep spacing between titles and data
 			html.Div(children=[
 			
-				# Title row
-				html.Div(children=[
-					html.Div(children=[
-						html.H5('Est 2019 Tax Bill')
-					], className='col-md-4 text-center'),
-					html.Div(children=[
-						html.H5('Customized Bill')
-					], className='col-md-4 text-center'),
-					html.Div(children=[
-						html.H5('Difference')
-					], className='col-md-4 text-center')
-				], className='row align-items-center'),
-
 				# Data row
 				html.Div(children=[
 					html.Div(children=[
+						html.H5('Est 2019 Tax Bill'),
 						html.Div(id='output-old-calc', className='personal-bar')
 					], className='col-md-4 text-center'),
 					html.Div(children=[
+						html.H5('Customized Bill'),
 						html.Div(id='output-agi-calc', className='personal-bar')
 					], className='col-md-4 text-center'),
 					html.Div(children=[
+						html.H5('Difference'),
 						html.Div(id='difference-agi-calc', className='personal-bar')
 					], className='col-md-4 text-center')
-				], className='row')
+				], className='row align-items-center'),
 
-			# Close out the section of two new rows
+			# Close out the section of new rows
 			], className='col-md-6'),
 
 			# Show a horizontal stacked bar illustrating how the tax is calculated
