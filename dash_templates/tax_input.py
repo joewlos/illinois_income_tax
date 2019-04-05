@@ -309,7 +309,7 @@ def create_info():
 	Use the sliders to **customize Illinois' tax rates** for different income brackets,
 	or use the dropdown menu to apply rates used in other Midwest states to Illinois.
 	Enter your income to view how different rates would change your own tax bill,
-	and view the effect on Illinois' budget defecit. 
+	and view the effect on Illinois' budget. 
 	When you are happy with your customizations,
 	submit your rates to see how your choices line up with those of other users.
 	'''))

@@ -137,15 +137,15 @@ def serve_layout():
 					as much as [36% since 1997](https://www.nationalaffairs.com/publications/detail/the-trouble-with-polling).
 					Traditional online surveys, which ask users to reply to multiple choice questions,
 					still get responses, but they fail to capture [complicated views on complex systems](https://www.brookings.edu/articles/polling-public-opinion-the-good-the-bad-and-the-ugly/),
-					like tax rates. By recording user interactions with this dashboard, 
-					this site both educates visitors about the effects of different policy choices,
-					and provides insight on what influences voters' thinking.
+					like tax rates. All user interactions with the app are recorded and stored
+					in Amazon's DynamoDB NoSQL service, where the data can be analyzed
+					for a better understanding of how Illinois' citizens think about tax rates.
 					'''
 				))),
 				html.P(dcc.Markdown(dedent(
 					'''
-					The site is currently collecting the following information from users:
-					* Generalized Location for Each Session
+					The app is currently collecting the following information from users:
+					* Generalized Location
 					* All Slider Movements
 					* All Income Entries
 					* All State Dropdown Selections
